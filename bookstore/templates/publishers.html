@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of publishers</title>
+</head>
+<body>
+{% block content %}
+    <p><a href="{% url 'index' %}">Return to home page</a></p>
+    {% if publishers %}
+        <div>
+            <h1>List of publishers:</h1>
+        </div>
+        <table cellspacing="2" border="1" cellpadding="5" bgcolor="LightCyan"
+               width="50%" rules="rows">
+        <caption>List of publishers:</caption>
+        <tr>
+            <th>Name</th>
+            <th>Count of books</th>
+        </tr>
+        {% for publisher in publishers %}
+            <tr align="center">
+                <td><a href="{% url 'publishers_detail' pk=publisher.pk %}">{{ publisher.name }}</a></td>
+                <td>{{ publisher.num_books }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>There are no publishers available.</p>
+    {% endif %}
+    <button type="button" onclick="history.back();">Back</button>
+{% endblock %}
+</body>
+</html>

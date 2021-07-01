@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of authors</title>
+</head>
+<body>
+
+{% block content %}
+    <p><a href="{% url 'index' %}">Return to home page</a></p>
+    {% if authors %}
+        <div>
+            <p>Average age of authors: {{ avg_age }}</p>
+            <p>Average rating of all the books we have written by authors: {{ avg_rating }}</p>
+            <h1>List of authors:</h1>
+        </div>
+        <table cellspacing="2" border="1" cellpadding="5" bgcolor="LightCyan"
+               width="50%" rules="rows">
+            <caption>List of authors:</caption>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Books</th>
+            </tr>
+            {% for author in authors %}
+                <tr align="center">
+                    <td><a href="{% url 'authors_detail' pk=author.pk %}">{{ author.name }}</a></td>
+                    <td>{{ author.age }}</td>
+                    <td>{{ author.book_set.all|length }} </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>There are no authors available.</p>
+    {% endif %}
+    <button type="button" onclick="history.back();">Back</button>
+{% endblock %}
+</body>
+</html>

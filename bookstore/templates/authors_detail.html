@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Selected author</title>
+</head>
+<body>
+{% block content %}
+<div>
+    <p><a href="{% url 'authors' %}">Back to the list of authors</a></p>
+    <h1>Author: {{ author.name }}, age: {{ author.age }} </h1>
+    <p>Total books: {{ author.book_set.count }}</p>
+    <table cellspacing="2" border="1" cellpadding="5" bgcolor="LightCyan"
+           width="50%" rules="rows">
+        <caption>List of books:</caption>
+        <tr>
+            <th>Name</th>
+            <th>Pages</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Publisher</th>
+            <th>Publication date</th>
+        </tr>
+        {% for book in books %}
+            <tr align="center">
+                <td><a href="{% url 'books_detail' pk=book.id %}"> {{ book.name }}</a></td>
+                <td>{{ book.pages }}</td>
+                <td>{{ book.price }}</td>
+                <td>{{ book.rating }}</td>
+                <td><a href="{% url 'publishers_detail' pk=book.publisher.pk %}">{{ book.publisher }}</a></td>
+                <td>{{ book.pubdate }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <button type="button" onclick="history.back();">Back</button>
+</div>
+{% endblock %}
+</body>
+</html>

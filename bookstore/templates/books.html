@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of books</title>
+</head>
+<body>
+{% block content %}
+    <p><a href="{% url 'index' %}">Return to home page</a></p>
+    {% if books %}
+        <div>
+            <p>Average price of books: {{ avg_price }}</p>
+            <p>Maximum price among books: {{ max_price }}</p>
+            <p>Minimum price among books: {{ min_price }}</p>
+            <h1>List of books by rating:</h1>
+        </div>
+        <table cellspacing="2" border="1" cellpadding="5" bgcolor="LightCyan"
+               width="50%" rules="rows">
+        <caption>List of books by rating:</caption>
+        <tr>
+            <th>Name</th>
+            <th>Pages</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Publisher</th>
+            <th>Publication date</th>
+            <th>Number of authors</th>
+        </tr>
+        {% for book in books %}
+            <tr align="center">
+                <td><a href="{% url 'books_detail' pk=book.pk %}"> {{ book.name }}</a></td>
+                <td>{{ book.pages }}</td>
+                <td>{{ book.price }}</td>
+                <td>{{ book.rating }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>{{ book.pubdate }}</td>
+                <td>{{ book.num_authors }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>There are no books in the library.</p>
+    {% endif %}
+    <button type="button" onclick="history.back();">Back</button>
+{% endblock %}
+</body>
+</html>

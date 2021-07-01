@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Selected store</title>
+</head>
+<body>
+{% block content %}
+    <p><a href="{% url 'stores' %}">Back to the list of stores</a></p>
+    <h1>Store: {{ store.name }}</h1>
+    <p>Total books: {{ store.books.count }}</p>
+    <table cellspacing="2" border="1" cellpadding="5" bgcolor="LightCyan"
+           width="60%" rules="rows">
+        <caption>Books:</caption>
+        <tr>
+            <th>Name</th>
+            <th>Pages</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Author</th>
+            <th>Publication date</th>
+        </tr>
+        {% for book in books %}
+            <tr align="center">
+                <td><a href="{% url 'books_detail' pk=book.pk %}"> {{ book.name }}</a></td>
+                <td>{{ book.pages }}</td>
+                <td>{{ book.price }}</td>
+                <td>{{ book.rating }}</td>
+                <td>
+                {% for author in book.authors.all %}
+                    <a href="{% url 'authors_detail' pk=author.pk %}">{{ author.name }}
+                        {% if not forloop.last %}, {% endif %}</a>
+                {% endfor %}
+                </td>
+                <td>{{ book.pubdate }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <button type="button" onclick="history.back();">Back</button>
+{% endblock %}
+</body>
+</html>

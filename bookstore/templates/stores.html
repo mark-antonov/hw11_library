@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of stores</title>
+</head>
+<body>
+{% block content %}
+    <p><a href="{% url 'index' %}">Return to home page</a></p>
+    {% if stores %}
+        <h1>List of stores:</h1>
+        <table cellspacing="2" border="1" cellpadding="5" bgcolor="LightCyan"
+               width="50%" rules="rows">
+            <caption>List of stores</caption>
+            <tr>
+                <th>Name</th>
+                <th>Count of books</th>
+            </tr>
+            {% for store in stores %}
+                <tr align="center">
+                    <td><a href="{% url 'stores_detail' pk=store.pk %}">{{ store.name }}</a></td>
+                    <td>{{ store.num_books }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>There are no store available.</p>
+    {% endif %}
+    <button type="button" onclick="history.back();">Back</button>
+{% endblock %}
+</body>
+</html>

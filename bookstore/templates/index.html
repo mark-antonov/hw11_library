@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+</head>
+<body>
+    <h1>Welcome to our library!</h1>
+    <ul>
+        <li><strong>Books: </strong><a href="{% url 'books' %}">{{ num_books }}</a></li>
+        <li><strong>Authors: </strong><a href="{% url 'authors' %}">{{ num_authors }}</a></li>
+        <li><strong>Publishers: </strong><a href="{% url 'publishers' %}">{{ num_publishers }}</a></li>
+        <li><strong>Stores: </strong><a href="{% url 'stores' %}">{{ num_stores }}</a></li>
+    </ul>
+</body>
+</html>
