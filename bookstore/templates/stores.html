@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>List of stores</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}List of stores{% endblock %}
+
 {% block content %}
     <p><a href="{% url 'index' %}">Return to home page</a></p>
     {% if stores %}
@@ -28,5 +25,3 @@
     {% endif %}
     <button type="button" onclick="history.back();">Back</button>
 {% endblock %}
-</body>
-</html>

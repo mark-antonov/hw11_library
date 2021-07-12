@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>List of authors</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}List of authors{% endblock %}
 
 {% block content %}
     <p><a href="{% url 'index' %}">Return to home page</a></p>
@@ -35,5 +31,3 @@
     {% endif %}
     <button type="button" onclick="history.back();">Back</button>
 {% endblock %}
-</body>
-</html>

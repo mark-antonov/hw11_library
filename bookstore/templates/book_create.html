@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Book create{% endblock %}
+
+{% block content %}
+    <h1>Create Book</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Create book">
+        <button type="button" onclick="history.back();">Back</button>
+    </form>
+{% endblock %}

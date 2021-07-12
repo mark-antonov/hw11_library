@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Selected store</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Selected store{% endblock %}
+
 {% block content %}
     <p><a href="{% url 'stores' %}">Back to the list of stores</a></p>
     <h1>Store: {{ store.name }}</h1>
@@ -38,5 +35,3 @@
     </table>
     <button type="button" onclick="history.back();">Back</button>
 {% endblock %}
-</body>
-</html>

@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Selected publisher</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Selected publisher{% endblock %}
+
 {% block content %}
     <p><a href="{% url 'publishers' %}">Back to the list of publishers</a></p>
     <h1>Publisher: {{ publisher.name }}</h1>
@@ -38,5 +35,3 @@
     </table>
     <button type="button" onclick="history.back();">Back</button>
 {% endblock %}
-</body>
-</html>

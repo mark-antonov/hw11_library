@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>List of books</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}List of books{% endblock %}
+
 {% block content %}
     <p><a href="{% url 'index' %}">Return to home page</a></p>
+    <p><a href="{% url 'book-create' %}"> Create Book</a></p>
     {% if books %}
         <div>
-            <p>Average price of books: {{ avg_price }}</p>
-            <p>Maximum price among books: {{ max_price }}</p>
-            <p>Minimum price among books: {{ min_price }}</p>
+            <p>Average price of books: {{ avg.avg_price|floatformat:2 }}</p>
+            <p>Maximum price among books: {{ avg.max_price }}</p>
+            <p>Minimum price among books: {{ avg.min_price }}</p>
             <h1>List of books by rating:</h1>
         </div>
         <table cellspacing="2" border="1" cellpadding="5" bgcolor="LightCyan"
@@ -42,6 +40,22 @@
         <p>There are no books in the library.</p>
     {% endif %}
     <button type="button" onclick="history.back();">Back</button>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
-</body>
-</html>

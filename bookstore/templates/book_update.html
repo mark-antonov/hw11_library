@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Book update{% endblock %}
+
+{% block content %}
+    <h1>Update Book</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Update book">
+        <button type="button" onclick="history.back();">Back</button>
+    </form>
+{% endblock %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
