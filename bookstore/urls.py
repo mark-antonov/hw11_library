@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page  # HT 15. Django redis cache
 
 from . import views
 
@@ -22,6 +23,6 @@ urlpatterns = [
     path('book/create/', views.BookCreate.as_view(), name='book-create'),
     path('book/update/<int:pk>/', views.BookUpdate.as_view(), name='book-update'),
     path('book/delete/<int:pk>/', views.BookDelete.as_view(), name='book-delete'),
-    path('books/<int:pk>/', views.BookDetail.as_view(), name='books_detail'),
+    path('books/<int:pk>/', cache_page(10)(views.BookDetail.as_view()), name='books_detail'),
     path('books/', views.BookList.as_view(), name='books'),
 ]

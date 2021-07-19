@@ -3,6 +3,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Avg, Count, Max, Min
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 from .models import Author, Book, Publisher, Store
@@ -22,6 +24,7 @@ from .models import Author, Book, Publisher, Store
 #     return render(request, 'index.html', context)
 
 
+@cache_page(10)
 def authors(request):
     # authors = Author.objects.all()
     authors = Author.objects.prefetch_related('book_set__authors')
@@ -35,17 +38,20 @@ def authors(request):
     return render(request, 'authors.html', context)
 
 
+@cache_page(10)
 def authors_detail(request, pk):
     author = get_object_or_404(Author, pk=pk)
     books = Book.objects.select_related('publisher')
     return render(request, 'authors_detail.html', {'author': author, 'books': books})
 
 
+@cache_page(10)
 def publishers(request):
     publishers = Publisher.objects.all().annotate(num_books=Count('book'))
     return render(request, 'publishers.html', {'publishers': publishers})
 
 
+@cache_page(10)
 def publishers_detail(request, pk):
     publisher = get_object_or_404(Publisher, pk=pk)
     books = Book.objects.prefetch_related('authors')
@@ -71,12 +77,13 @@ def publishers_detail(request, pk):
 #     book = get_object_or_404(Book, pk=pk)
 #     return render(request, 'books_detail.html', {'book': book})
 
-
+@cache_page(10)
 def stores(request):
     stores = Store.objects.all().annotate(num_books=Count('books'))
     return render(request, 'stores.html', {'stores': stores})
 
 
+@cache_page(10)
 def stores_detail(request, pk):
     store = get_object_or_404(Store, pk=pk)
     books = Book.objects.prefetch_related('authors')
@@ -124,15 +131,17 @@ class BookDelete(LoginRequiredMixin, DeleteView):
     login_url = '/admin/login/'
 
 
+@method_decorator(cache_page(10), name='dispatch')
 class BookDetail(DetailView):
     model = Book
     template_name = 'books_detail.html'
 
 
+@method_decorator(cache_page(10), name='dispatch')  # HT 15. Django redis cache
 class BookList(ListView):
     model = Book
     template_name = 'books.html'
-    paginate_by = 10
+    paginate_by = 100
     queryset = Book.objects.annotate(num_authors=Count('authors')).select_related('publisher')
     context_object_name = 'books'
 

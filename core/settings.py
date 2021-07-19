@@ -158,3 +158,14 @@ SILKY_PYTHON_PROFILER = True
 SILKY_AUTHENTICATION = True  # User must login
 SILKY_AUTHORISATION = True  # User must have permissions
 SILKY_PERMISSIONS = lambda user: user.is_superuser  # noqa: E731
+
+# HT 15. CACHES for redis
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
