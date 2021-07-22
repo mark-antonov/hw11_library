@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load custom_tags_filters %}
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+  {% current_time "%d/%m/%Y %H:%M:%S %p" %}
   {% block content %}{% endblock %}
 </body>
 </html>

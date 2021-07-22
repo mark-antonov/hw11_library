@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
 
+{% load custom_tags_filters %}
+
 {% block title %}List of books{% endblock %}
 
 {% block content %}
+    <p>Testing custom filter "no_swear": {{ "Fuck! It says so many things in so few letters."|no_swear }}</p>
+    <p>Testing custom tag "random_best_book": {% random_best_book %} </p>
+    <p>Testing custom tag "random_book": {% random_book %} </p>
     <p><a href="{% url 'index' %}">Return to home page</a></p>
     <p><a href="{% url 'book-create' %}"> Create Book</a></p>
     {% if books %}
         <div>
-            <p>Average price of books: {{ avg.avg_price|floatformat:2 }}</p>
-            <p>Maximum price among books: {{ avg.max_price }}</p>
-            <p>Minimum price among books: {{ avg.min_price }}</p>
+            <p>Average price of books: {{ avg.avg_price|floatformat:2|currency }}</p>
+            <p>Maximum price among books: {{ avg.max_price|currency }}</p>
+            <p>Minimum price among books: {{ avg.min_price|currency }}</p>
             <h1>List of books by rating:</h1>
         </div>
         <table cellspacing="2" border="1" cellpadding="5" bgcolor="LightCyan"
