@@ -13,3 +13,6 @@ django-redis==5.0.0
 redis==3.5.3
 requests==2.25.1
 better-profanity==0.7.0
+celery==5.1.2
+django-celery-results==2.2.0
+django-widget-tweaks==1.4.8

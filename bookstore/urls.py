@@ -25,4 +25,7 @@ urlpatterns = [
     path('book/delete/<int:pk>/', views.BookDelete.as_view(), name='book-delete'),
     path('books/<int:pk>/', cache_page(10)(views.BookDetail.as_view()), name='books_detail'),
     path('books/', views.BookList.as_view(), name='books'),
+
+    # HT 19. Bootstrap, JQuery, JSON, AJAX
+    path('contact/', views.contact_form, name='contact'),
 ]

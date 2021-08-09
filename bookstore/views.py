@@ -1,13 +1,18 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Avg, Count, Max, Min
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
+from .forms import ContactForm
 from .models import Author, Book, Publisher, Store
+from .tasks import contact_us_send_mail
 
 
 # def index(request):
@@ -150,3 +155,24 @@ class BookList(ListView):
         context['avg'] = Book.objects.all().aggregate(avg_price=Avg('price'), max_price=Max('price'),
                                                       min_price=Min('price'))
         return context
+
+
+# HT 19. Bootstrap, JQuery, JSON, AJAX
+def contact_form(request):
+    data = dict()
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            data['form_is_valid'] = True
+            contact_us_send_mail.delay(subject, message, from_email, ['admin@example.com'])
+            messages.add_message(request, messages.SUCCESS, 'Message sent')
+        else:
+            data['form_is_valid'] = False
+    else:
+        form = ContactForm()
+    context = {'form': form}
+    data['html_form'] = render_to_string(template_name='contact.html', context=context, request=request)
+    return JsonResponse(data)
